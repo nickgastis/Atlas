@@ -105,7 +105,7 @@
     margin-top: 10px;
 }
 
-.post-action-btn {
+.post-action-btn-up {
     padding: 5px 10px;
     margin-right: 10px;
     background-color: #0079d3;
@@ -116,13 +116,49 @@
     transition: 0.3s ease-in-out;
 }
 
-.post-action-btn:hover {
+.post-action-btn-up:hover {
     transition: 0.3s ease-in-out;
     background-color: #26273183;
 }
 
-.post-action-btn:last-child {
+.post-action-btn-up:last-child {
     margin-right: 0;
+}
+
+.post-action-btn-down {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #6e8194;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.post-action-btn-down:hover {
+    transition: 0.3s ease-in-out;
+    background-color: #26273183;
+}
+
+.post-action-btn-down:last-child {
+    margin-right: 0;
+}
+
+.read-more {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #415d74;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.read-more:hover {
+    transition: 0.2s ease-in-out;
+    background-color: #40545f83;
 }
 
 .atlas-response {
