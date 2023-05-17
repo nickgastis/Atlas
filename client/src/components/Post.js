@@ -21,9 +21,11 @@ function Post() {
                     </div>
                 </div>
                 <div className="post-actions">
-                    <button className="post-action-btn">Upvote</button>
-                    <button className="post-action-btn">Downvote</button>
+                    <button className="post-action-btn-up">Upvote</button>
+                    <button className="post-action-btn-down">Downvote</button>
                 </div>
+                {/* POST ID CLICK BELOW */}
+                <button className='read-more'>Read More</button>
             </div>
         </div>
     );
