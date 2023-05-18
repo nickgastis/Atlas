@@ -6,5 +6,5 @@ function About() {
         <div>About</div>
     )
 }
-//change
+
 export default About
