@@ -36,7 +36,7 @@ const LoginButton = () => {
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log("User added successfully:", data);
+                        console.log("User Status:", data);
 
                     })
                     .catch((error) => {

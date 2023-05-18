@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './styles/Chats.css';
+import CreatePost from './CreatePost';
 
 
 
@@ -7,6 +8,8 @@ import './styles/Chats.css';
 function Chats() {
     const [chatMessages, setChatMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
+    const [showCreatePost, setShowCreatePost] = useState(false);
+    const [conversation, setConversation] = useState('');
 
     const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -31,9 +34,9 @@ function Chats() {
                         content: message.message,
                     })),
                     { role: 'user', content: prompt },
-                    {
+                    {   //PROMPT FOR ATLAS
                         role: 'system', content: "You are Atlas, a friendly and helpful coding assistant. As Atlas, your purpose is to provide guidance and support to users seeking coding advice. When responding to user queries, please refer to yourself as Atlas and provide detailed and informative answers based on the complexity of the question. Under no circumstances will you refer to yourself as anything other than Atlas. Be friendly and patient, tailoring your advice to the user's skill level and context. Remember not to repeat your responses to ensure a diverse range of answers. Additionally, when a user expresses gratitude, respond with 'You're welcome! Is there anything else I can help you with?' instead of providing a repeated response. This way, you encourage further engagement and assist the user with any additional questions or concerns they may have. Your goal is to create a positive and productive coding learning experience for users, as Atlas, their trusted coding companion."
-                    }, // Add your system prompt here
+                    },
                 ],
             };
 
@@ -82,10 +85,38 @@ function Chats() {
 
         setUserInput('');
     };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            sendMessageToChatbot();
+        }
+    };
+
+
+    const chatMessagesRef = useRef(null);
+
+    useEffect(() => {
+        if (chatMessagesRef.current) {
+            chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+        }
+    }, [chatMessages]);
+
+
+
+    const handlePostButtonClick = () => {
+        setShowCreatePost(true);
+        // Set the conversation from the chat messages
+        const conversationText = chatMessages.map(message => `${message.sender}: ${message.message}`).join('\n');
+        setConversation(conversationText);
+    };
+
+
+
+
     return (
         <div>
             <div className="chat-container">
-                <div className="chat-messages">
+                <div className="chat-messages" ref={chatMessagesRef}>
                     {chatMessages.map((message, index) => (
                         <div
                             key={index}
@@ -100,6 +131,7 @@ function Chats() {
                             >
                                 <span className="sender">{message.sender}: </span>
                                 <span className="message">{message.message}</span>
+
                             </div>
                         </div>
                     ))}
@@ -113,15 +145,21 @@ function Chats() {
                             type="text"
                             value={userInput}
                             onChange={e => setUserInput(e.target.value)}
+                            onKeyDown={handleKeyDown}
                             placeholder="Type your message..."
                         />
                         <button onClick={sendMessageToChatbot}>Send</button>
+
+                        <button onClick={handlePostButtonClick}>Post</button>
+                        {showCreatePost && <CreatePost conversation={conversation} />}
                     </div>
+
                 </div>
             </div>
+
         </div>
     );
-}
+};
 
 export default Chats;
 

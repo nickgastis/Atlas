@@ -10,7 +10,12 @@ from flask_login import LoginManager, login_user, current_user, login_required
 
 
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+            )
 app.secret_key = os.environ.get('APP_SECRET_KEY')
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -23,6 +28,12 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 api = Api(app)
+
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
 
 
 @login_manager.user_loader
