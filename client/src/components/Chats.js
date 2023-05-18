@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './styles/Chats.css';
 
+
+
+
 function Chats() {
     const [chatMessages, setChatMessages] = useState([]);
     const [userInput, setUserInput] = useState('');

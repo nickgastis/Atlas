@@ -6,8 +6,15 @@ import os
 from dotenv import load_dotenv
 from flask_migrate import Migrate
 load_dotenv('../.env.local')
+from flask_login import LoginManager, login_user, current_user, login_required
+
+
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('APP_SECRET_KEY')
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('EXTERNAL_DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
@@ -18,6 +25,59 @@ db.init_app(app)
 api = Api(app)
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+
+
+
+@app.route('/auth/callback', methods=['POST'])
+def auth_callback():
+    data = request.json
+    print(data)
+    username = data['username']
+    email = data['email']
+    auth0_id = data['sub']
+
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        login_user(user) 
+        print("user logged in ")
+        return jsonify({'message': 'User already exists'})
+
+    new_user = User(username=username, email=email, auth0_id=auth0_id)
+    db.session.add(new_user)
+    db.session.commit()
+    print("user logged in successfully")
+    login_user(new_user)
+
+    return jsonify({'message': 'User created and logged in successfully'})
+
+
+
+
+@app.route('/current_user', methods=['GET'])
+@login_required
+def get_current_user():
+    auth0_id = session.get('auth0_id')
+
+    if auth0_id:
+        current_user = User.query.get(auth0_id).first()
+        if current_user:
+            return {
+                'username': current_user.username,
+                'email': current_user.email,
+                'sub': current_user.sub
+            }
+        else:
+            return {'message': 'User not found'}, 404
+
+    return {'message': 'Unauthorized'}, 401
+
+
 class UsersById(Resource):
     def get(self, user_id):
         user = User.query.get(user_id)
@@ -25,7 +85,6 @@ class UsersById(Resource):
             return {
                 'id': user.id,
                 'username': user.username,
-                'email': user.email
             }
         else:
             return {'message': 'User not found'}, 404
