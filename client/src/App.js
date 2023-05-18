@@ -13,30 +13,30 @@ function App() {
 
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCurrentUser = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-
-        const response = await fetch('/current_user', {
+        const response = await fetch("/current_user", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
 
         if (response.ok) {
-          const data = await response.json();
-          console.log('User Data:', data);
+          const userData = await response.json();
+          console.log("User Data:", userData);
 
         } else {
-          console.error('Error:', response.statusText);
+          console.error("Error:", response.statusText);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
-    fetchData();
+    fetchCurrentUser();
   }, [getAccessTokenSilently]);
+
 
   return (
     <div className="App">
