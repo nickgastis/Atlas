@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
@@ -14,10 +15,27 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
-    _password_hash = db.Column(db.String)
+    auth0_id = db.Column(db.String, unique=True, nullable=False)  # Auth0 user ID
 
     queries = db.relationship('Query', backref='user', lazy=True)
     posts = db.relationship('Post', backref='user', lazy=True)
+
+    def get_id(self):
+        return self.id
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+    
+    
 
 class Query(db.Model):
     id = db.Column(db.Integer, primary_key=True)
