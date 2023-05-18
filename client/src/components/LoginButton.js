@@ -19,7 +19,7 @@ const LoginButton = () => {
                 const userInfo = await response.json();
                 console.log(userInfo);
 
-                // Send POST request to backend API to add the user to the database
+
                 const userData = {
                     username: userInfo.nickname,
                     email: userInfo.email,
