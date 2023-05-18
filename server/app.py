@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 load_dotenv('../.env.local')
 from flask_login import LoginManager, login_user, current_user, login_required
-from sqlalchemy import MetaData, desc, asc, CheckConstraint, or_
-from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import MetaData, desc, asc, CheckConstraint, or_
+# from flask_sqlalchemy import SQLAlchemy
 
 
 
@@ -28,10 +28,10 @@ app.json.compact = False
 
 
 
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
-db = SQLAlchemy(metadata=metadata)
+# metadata = MetaData(naming_convention={
+#     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+# })
+# db = SQLAlchemy(metadata=metadata)
 
 migrate = Migrate(app, db)
 

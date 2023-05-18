@@ -150,9 +150,9 @@ function Chats() {
                         />
                         <button onClick={sendMessageToChatbot}>Send</button>
 
-                        <button onClick={handlePostButtonClick}>Post</button>
-                        {showCreatePost && <CreatePost conversation={conversation} />}
                     </div>
+                    <button className='post-btn' onClick={handlePostButtonClick}>Post</button>
+                    {showCreatePost && <CreatePost conversation={conversation} />}
 
                 </div>
             </div>
