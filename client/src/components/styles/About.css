@@ -1,0 +1,15 @@
+.about-container {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+
+}
+
+.about {
+    margin-left: 10%;
+    width: 1500px;
+    color: aliceblue;
+    line-height: 2;
+    margin-top: 40px;
+    font-size: 20px;
+}

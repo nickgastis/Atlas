@@ -35,7 +35,7 @@ function Chats() {
                     })),
                     { role: 'user', content: prompt },
                     {   //PROMPT FOR ATLAS
-                        role: 'system', content: "You are Atlas, a friendly and helpful coding assistant. As Atlas, your purpose is to provide guidance and support to users seeking coding advice. When responding to user queries, please refer to yourself as Atlas and provide detailed and informative answers based on the complexity of the question. Under no circumstances will you refer to yourself as anything other than Atlas. Be friendly and patient, tailoring your advice to the user's skill level and context. Remember not to repeat your responses to ensure a diverse range of answers. Additionally, when a user expresses gratitude, respond with 'You're welcome! Is there anything else I can help you with?' instead of providing a repeated response. This way, you encourage further engagement and assist the user with any additional questions or concerns they may have. Your goal is to create a positive and productive coding learning experience for users, as Atlas, their trusted coding companion."
+                        role: 'system', content: "You are Atlas, a friendly and helpful coding assistant. As Atlas, your purpose is to provide guidance and support to users seeking coding advice. When responding to user queries, please refer to yourself as Atlas and provide detailed and informative answers based on the complexity of the question. Be friendly and patient, tailoring your advice to the user's skill level and context. Under no circumstances will you refer to yourself as anything other than Atlas. Your responses should be focused on directly addressing the user's query without offering additional information unless specifically requested by the user. If the user expresses gratitude, acknowledge it and ask if there is anything else you can assist them with, without repeating previous responses. Encourage further questions and engagement from the user to explore different aspects of the topic.Your goal is to provide concise and relevant answers to users' queries, ensuring a positive and productive coding learning experience as their trusted coding companion, Atlas."
                     },
                 ],
             };
@@ -116,22 +116,30 @@ function Chats() {
     return (
         <div>
             <div className="chat-container">
+                <button className='post-btn' onClick={handlePostButtonClick}>Post</button>
                 <div className="chat-messages" ref={chatMessagesRef}>
                     {chatMessages.map((message, index) => (
                         <div
                             key={index}
-                            className={`chat-message ${message.sender === 'User' ? 'user-message' : 'atlas-message'
-                                }`}
+                            className={`chat-message ${message.sender === 'User' ? 'user-message' : 'atlas-message'}`}
                         >
                             <div
-                                className={`message-box ${message.sender === 'User'
-                                    ? 'user-message-box'
-                                    : 'atlas-message-box'
-                                    }`}
+                                className={`message-box ${message.sender === 'User' ? 'user-message-box' : 'atlas-message-box'}`}
                             >
-                                <span className="sender">{message.sender}: </span>
-                                <span className="message">{message.message}</span>
-
+                                <div className="message-content">
+                                    {message.sender === 'User' ? (
+                                        <p className="user-sender">{message.sender}: {message.message}</p>
+                                    ) : (
+                                        <div>
+                                            <p className="atlas-sender">Atlas:</p>
+                                            {message.message.split('\n').map((text, i) => (
+                                                <p key={i} className="atlas-message-text">
+                                                    {text}
+                                                </p>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -144,21 +152,20 @@ function Chats() {
                             className="search-input"
                             type="text"
                             value={userInput}
-                            onChange={e => setUserInput(e.target.value)}
+                            onChange={(e) => setUserInput(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="Type your message..."
                         />
                         <button onClick={sendMessageToChatbot}>Send</button>
-
+                        {showCreatePost && <CreatePost conversation={conversation} />}
                     </div>
-                    <button className='post-btn' onClick={handlePostButtonClick}>Post</button>
-                    {showCreatePost && <CreatePost conversation={conversation} />}
-
                 </div>
             </div>
-
         </div>
     );
+
+
+
 };
 
 export default Chats;
