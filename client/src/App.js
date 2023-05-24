@@ -5,18 +5,32 @@ import Home from './components/Home';
 import Chats from './components/Chats';
 import SideBar from './components/SideBar';
 import About from './components/About';
+import Profile from './components/Profile';
 import './App.css';
 
 function App() {
-  const [User, setUser] = useState([])
-  const { getAccessTokenSilently } = useAuth0();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+
+  console.log("CURRENT USER", currentUser);
 
 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
+  const fetchUserInfo = async () => {
+    try {
+      const accessToken = await getAccessTokenSilently();
+      await fetchCurrentUser(accessToken);
+      // console.log('ACCESS TOKEN', accessToken);
+    } catch (error) {
+      console.error('Error retrieving user information:', error);
+    }
+  };
+
+  const fetchCurrentUser = async () => {
+    try {
+      if (isAuthenticated) {
         const accessToken = await getAccessTokenSilently();
-        const response = await fetch("/current_user", {
+        const response = await fetch('/current_user', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -24,27 +38,58 @@ function App() {
 
         if (response.ok) {
           const userData = await response.json();
-          console.log("User Data:", userData);
-
+          setCurrentUser(userData);
         } else {
-          console.error("Error:", response.statusText);
+          console.error('Error:', response.statusText);
         }
-      } catch (error) {
-        console.error("Error:", error);
       }
-    };
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
-    fetchCurrentUser();
-  }, [getAccessTokenSilently]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserInfo();
+    }
+  }, [getAccessTokenSilently, isAuthenticated]);
+
+
+
+
+  useEffect(() => {
+    fetch('/posts')
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error('Error retrieving posts');
+        }
+        return resp.json();
+      })
+      .then(data => {
+        setPosts(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
+
+  // console.log('POST DATA', posts);
+
+  // console.log("CYRRENT USER", currentUser);
+
+
+
+
 
 
   return (
     <div className="App">
-      <SideBar />
+      <SideBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/chats' element={<Chats />} />
-        <Route path='/about' element={<About />} />
+        <Route path="/" element={<Home posts={posts} />} />
+        <Route path="/chats" element={<Chats currentUser={currentUser} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile currentUser={currentUser} />} />
       </Routes>
     </div>
   );

@@ -3,7 +3,7 @@ import './styles/Home.css';
 import Post from './Post';
 import SearchBar from './SearchBar';
 
-function Home() {
+function Home({ posts }) {
     return (
         <div className="home">
             <h1 className='welcome-title'>Welcome to Atlas!</h1>
@@ -11,19 +11,8 @@ function Home() {
                 <SearchBar />
             </div>
             <div className="post-list">
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
+                <Post posts={posts} />
+
                 {/* Each post component goes here */}
             </div>
         </div>
