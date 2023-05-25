@@ -28,7 +28,7 @@ function Home({ posts }) {
 
         setFilteredPosts(filtered);
     };
-
+    //COMMENT
     return (
         <div className="home">
             <h1 className="welcome-title">Welcome to Atlas!</h1>
