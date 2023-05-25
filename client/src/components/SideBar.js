@@ -3,10 +3,11 @@ import { NavLink, Link } from 'react-router-dom';
 import './styles/SideBar.css';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
+import Profile from './Profile';
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-function SideBar() {
+function SideBar({ currentUser, setCurrentUser }) {
 
     const { user } = useAuth0();
 
@@ -28,7 +29,7 @@ function SideBar() {
                 <NavLink to="/about" activeClassName="active">
                     About
                 </NavLink>
-                <LoginButton />
+                <LoginButton setCurrentUser={setCurrentUser} />
 
             </div>
         );
@@ -48,12 +49,16 @@ function SideBar() {
                 Home
             </NavLink>
             <NavLink to="/chats" activeClassName="active">
-                Chats
+                Chat
             </NavLink>
             <NavLink to="/about" activeClassName="active">
                 About
             </NavLink>
-            <LogoutButton />
+            <NavLink to="/profile" activeClassName="active">
+                {currentUser ? currentUser.username : 'Loading...'}
+            </NavLink>
+
+            <LogoutButton setCurrentUser={setCurrentUser} />
         </div>
     );
 }

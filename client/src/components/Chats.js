@@ -5,14 +5,32 @@ import CreatePost from './CreatePost';
 
 
 
-function Chats() {
+function Chats({ currentUser }) {
     const [chatMessages, setChatMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [conversation, setConversation] = useState('');
 
-    const apiKey = process.env.REACT_APP_API_KEY;
+    useEffect(() => {
+        if (currentUser && currentUser.user_id) {
+            const storedChatMessages = JSON.parse(localStorage.getItem(`chatMessages_${currentUser.user_id}`));
+            setChatMessages(storedChatMessages || []);
+        }
+    }, [currentUser]);
 
+    useEffect(() => {
+        if (currentUser && currentUser.user_id) {
+            localStorage.setItem(`chatMessages_${currentUser.user_id}`, JSON.stringify(chatMessages));
+        }
+    }, [chatMessages, currentUser]);
+
+    console.log("CHATS CURRENT USER", currentUser);
+
+
+
+
+    const apiKey = process.env.REACT_APP_API_KEY;
+    // console.log(currentUser)
     useEffect(() => {
         if (chatMessages.length > 0 && chatMessages[chatMessages.length - 1].sender === 'User') {
             const prompt = userInput.trim();
@@ -25,6 +43,10 @@ function Chats() {
             const isGratitude = gratitudeKeywords.some(keyword =>
                 prompt.toLowerCase().includes(keyword)
             );
+
+
+
+
 
             const payload = {
                 model: 'gpt-3.5-turbo',
@@ -110,13 +132,15 @@ function Chats() {
         setConversation(conversationText);
     };
 
+    const clearConversation = () => {
+        setChatMessages([]);
+    };
 
 
 
     return (
         <div>
             <div className="chat-container">
-                <button className='post-btn' onClick={handlePostButtonClick}>Post</button>
                 <div className="chat-messages" ref={chatMessagesRef}>
                     {chatMessages.map((message, index) => (
                         <div
@@ -132,7 +156,12 @@ function Chats() {
                                     ) : (
                                         <div>
                                             <p className="atlas-sender">Atlas:</p>
-                                            {message.message.split('\n').map((text, i) => (
+                                            {/* {message.message && typeof message.message === 'string' && message.message.split('\n').map((text, i) => (
+                                                <p key={i} className="atlas-message-text">
+                                                    {text}
+                                                </p>
+                                            ))} */}
+                                            {message.message && typeof message.message === 'string' && message.message.split('\n').map((text, i) => (
                                                 <p key={i} className="atlas-message-text">
                                                     {text}
                                                 </p>
@@ -143,9 +172,11 @@ function Chats() {
                             </div>
                         </div>
                     ))}
+                    <button className='clear-btn' onClick={clearConversation}>Clear Conversation</button>
                 </div>
             </div>
             <div className="search-cont">
+                <button className='post-btn' onClick={handlePostButtonClick}>Post</button>
                 <div className="chat-input">
                     <div className="search-bar-chat">
                         <input
@@ -157,7 +188,7 @@ function Chats() {
                             placeholder="Type your message..."
                         />
                         <button onClick={sendMessageToChatbot}>Send</button>
-                        {showCreatePost && <CreatePost conversation={conversation} />}
+                        {showCreatePost && <CreatePost currentUser={currentUser} conversation={conversation} />}
                     </div>
                 </div>
             </div>

@@ -56,7 +56,7 @@ def load_user(user_id):
 @app.route('/auth/callback', methods=['POST'])
 def auth_callback():
     data = request.json
-    print(data)
+    
     username = data['username']
     email = data['email']
     auth0_id = data['sub']
@@ -79,23 +79,101 @@ def auth_callback():
 
 
 
+from flask_login import current_user, login_required
+
 @app.route('/current_user', methods=['GET'])
 @login_required
 def get_current_user():
-    auth0_id = session.get('auth0_id')
+    user_id = session.get('_user_id')
+    print(session)
 
-    if auth0_id:
-        current_user = User.query.get(auth0_id).first()
-        if current_user:
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
             return {
-                'username': current_user.username,
-                'email': current_user.email,
-                'sub': current_user.sub
+                'username': user.username,
+                'email': user.email,
+                'auth0_id': user.auth0_id,
+                'user_id': user.id
             }
         else:
             return {'message': 'User not found'}, 404
 
     return {'message': 'Unauthorized'}, 401
+
+
+
+
+@app.route('/current_user', methods=['DELETE'])
+@login_required
+def delete_current_user():
+    user_id = session.get('_user_id')
+
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return {'message': 'User deleted successfully'}
+        else:
+            return {'message': 'User not found'}, 404
+
+    return {'message': 'Unauthorized'}, 401
+
+
+
+
+
+
+
+@app.route('/api/posts', methods=['POST'])
+def create_post():
+    data = request.get_json()
+    title = data.get('title')
+    conversation = str(data.get('conversation'))  # Convert to string
+    username = data.get('username')
+    
+    
+    user_id = data.get('user_id')
+    new_post = Post(title=title, conversation=conversation, user_id=user_id, username=username)
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return jsonify(message='Post created successfully'), 201
+
+
+
+
+
+from flask import jsonify
+
+@app.route('/posts', methods=['GET'])
+def get_all_posts():
+    posts = Post.query.order_by(Post.upvotes.desc()).all()
+    
+    serialized_posts = []
+    for post in posts:
+        serialized_post = {
+            'id': post.id,
+            'title': post.title,
+            'conversation': post.conversation,
+            'user_id': post.user_id,
+            'upvotes': post.upvotes,
+            'downvotes': post.downvotes,
+            'username': post.username,
+        }
+        serialized_posts.append(serialized_post)
+    
+    return jsonify(serialized_posts)
+
+# from flask_restful import Resource
+
+
+
+
+
+
 
 
 class UsersById(Resource):
@@ -122,77 +200,38 @@ class UsersById(Resource):
         return {'message': 'User created successfully'}, 201
 
 
-class QueryResource(Resource):
-    def get(self, query_id):
-        query = Query.query.get(query_id)
-        if query:
-            return {
-                'id': query.id,
-                'title': query.title,
-                'conversation': query.conversation,
-                'user_id': query.user_id
-            }
-        else:
-            return {'message': 'Query not found'}, 404
+# class QueryResource(Resource):
+#     def get(self, query_id):
+#         query = Query.query.get(query_id)
+#         if query:
+#             return {
+#                 'id': query.id,
+#                 'title': query.title,
+#                 'conversation': query.conversation,
+#                 'user_id': query.user_id
+#             }
+#         else:
+#             return {'message': 'Query not found'}, 404
 
 
-    def post(self):
-        data = request.get_json()
-        title = data.get('title')
-        conversation = data.get('conversation')
-        user_id = data.get('user_id')
+#     def post(self):
+#         data = request.get_json()
+#         title = data.get('title')
+#         conversation = data.get('conversation')
+#         user_id = data.get('user_id')
 
-        query = Query(title=title, conversation=conversation, user_id=user_id)
-        db.session.add(query)
-        db.session.commit()
+#         query = Query(title=title, conversation=conversation, user_id=user_id)
+#         db.session.add(query)
+#         db.session.commit()
 
-        return {'message': 'Query created successfully'}, 201
+#         return {'message': 'Query created successfully'}, 201
 
 
 
 api.add_resource(UsersById, '/users', '/users/<int:user_id>')
-api.add_resource(QueryResource, '/queries', '/queries/<int:query_id>')
+# api.add_resource(QueryResource, '/queries', '/queries/<int:query_id>')
 
 
-
-# class CheckSession(Resource):
-#     def get(self):
-#         if not session.get('user_id'):
-#             return make_response({'error': '401 Unauthorized'}, 401)
-
-#         the_user = User.query.filter_by(id=session['user_id']).first()
-#         return make_response(the_user.to_dict(), 200)
-
-# api.add_resource(CheckSession, '/check_session')
-
-
-# class Login(Resource):
-#     def post(self):
-#         data = request.get_json()
-
-#         the_user = User.query.filter_by(username=data.get('username')).first()
-
-#         if not the_user:
-#             return make_response({'error': 'Username does not exist'}, 404)
-
-#         if not the_user.authenticate(data.get('password')):
-#             return make_response({'error': 'Invalid password'}, 400)
-
-#         session['user_id'] = the_user.id
-#         return make_response(the_user.to_dict(), 200)
-
-# api.add_resource(Login, '/login')
-
-
-# class Logout(Resource):
-#     def delete(self):
-#         if session.get('user_id'):
-#             session['user_id'] = None
-#             return make_response({'message': 'Successfully logged out'}, 204)
-
-#         return make_response({'error': '401 Unauthorized'}, 401)
-
-# api.add_resource(Logout, '/logout')
 
 
 if __name__ == '__main__':

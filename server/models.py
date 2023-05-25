@@ -17,8 +17,8 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     auth0_id = db.Column(db.String, unique=True, nullable=False)  # Auth0 user ID
 
-    queries = db.relationship('Query', backref='user', lazy=True)
-    posts = db.relationship('Post', backref='user', lazy=True)
+    queries = db.relationship('Query', backref='user', lazy=True, cascade='all, delete')
+    posts = db.relationship('Post', backref='user', lazy=True, cascade='all, delete')
 
     def get_id(self):
         return self.id
@@ -57,32 +57,37 @@ class Query(db.Model):
         return question
 
 class Post(db.Model):
+
+    serialize_rules = ('-created_at', '-updated_at',)
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    conversation = db.Column(db.Text, nullable=False)
+    username = db.Column(db.String)
+    conversation = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     upvotes = db.Column(db.Integer, default=0)
     downvotes = db.Column(db.Integer, default=0)
 
+
     @validates('title')
     def validate_title(self, key, title):
         # Add validation logic if needed
         return title
 
-    @hybrid_property
-    def query(self):
-        if self.conversation:
-            lines = self.conversation.split('\n')
-            if len(lines) > 2:
-                return lines[1].split(': ', 1)[-1].strip()
-        return ''
+    # @hybrid_property
+    # def query(self):
+    #     if self.conversation:
+    #         lines = self.conversation.split('\n')
+    #         if len(lines) > 2:
+    #             return lines[1].split(': ', 1)[-1].strip()
+    #     return ''
 
-    @hybrid_property
-    def answer(self):
-        if self.conversation:
-            lines = self.conversation.split('\n')
-            if len(lines) > 2:
-                return lines[2].split(': ', 1)[-1].strip()
-        return ''
+    # @hybrid_property
+    # def answer(self):
+    #     if self.conversation:
+    #         lines = self.conversation.split('\n')
+    #         if len(lines) > 2:
+    #             return lines[2].split(': ', 1)[-1].strip()
+    #     return ''
