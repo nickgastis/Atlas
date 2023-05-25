@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./styles/LoginButton.css";
 
-const LoginButton = () => {
+const LoginButton = ({ setCurrentUser }) => {
     const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
     useEffect(() => {
@@ -19,13 +19,12 @@ const LoginButton = () => {
                 const userInfo = await response.json();
                 console.log(userInfo);
 
-
                 const userData = {
                     username: userInfo.nickname,
                     email: userInfo.email,
                     sub: userInfo.sub,
-                };
 
+                };
 
                 fetch("/auth/callback", {
                     method: "POST",
@@ -37,7 +36,7 @@ const LoginButton = () => {
                     .then((response) => response.json())
                     .then((data) => {
                         console.log("User Status:", data);
-
+                        setCurrentUser(userData); // Set currentUser to the fetched userData in the parent component
                     })
                     .catch((error) => {
                         console.error("Error adding user to the database:", error);
@@ -57,7 +56,7 @@ const LoginButton = () => {
         };
 
         fetchUserInfo();
-    }, [getAccessTokenSilently]);
+    }, [getAccessTokenSilently, setCurrentUser]);
 
     return (
         <button className="ui-btn" onClick={loginWithRedirect}>
