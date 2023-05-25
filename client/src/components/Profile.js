@@ -36,6 +36,7 @@ function Profile({ currentUser }) {
 
     return (
         <div className="profile-container">
+<<<<<<< HEAD
             <div className="profile">
                 <h2>Welcome, {currentUser.username}!</h2>
                 <p>Email: {currentUser.email}</p>
@@ -49,6 +50,18 @@ function Profile({ currentUser }) {
                     <button onClick={handleDeleteAccount}>Delete Account</button>
 
                 </div>
+=======
+            <div class="card">
+
+                <span>{currentUser.username}</span>
+                <p class="info"> Email: {currentUser.email} </p>
+                <p class="info"> Posts: 5 </p>
+
+                <div class="share">
+                    <h1 className='m-a' >Manage Account</h1>
+                </div>
+                <button onClick={handleDeleteAccount}>Delete Account</button>
+>>>>>>> wednesday11
             </div>
         </div>
     );

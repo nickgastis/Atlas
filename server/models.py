@@ -64,7 +64,11 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String)
     conversation = db.Column(db.String, nullable=False)
+<<<<<<< HEAD
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+=======
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+>>>>>>> wednesday11
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     upvotes = db.Column(db.Integer, default=0)

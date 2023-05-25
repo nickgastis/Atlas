@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .profile-container {
     display: flex;
     justify-content: center;
@@ -11,10 +12,45 @@
     text-align: center;
     color: aliceblue;
     font-size: 25px;
+=======
+.card {
+    width: 23em;
+    height: 25.5em;
+    background: #132026;
+    transition: 1s ease-in-out;
+    clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 45%;
+    margin-top: 10%;
+}
+
+.card span {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: block;
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.card .info {
+    font-weight: 400;
+    color: white;
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    margin: 1em;
+    margin-top: 1em;
+>>>>>>> wednesday11
 }
 
 
 
+<<<<<<< HEAD
 .profile-header {
     margin-bottom: 20px;
 }
@@ -31,4 +67,46 @@
 
 .profile-posts {
     margin-top: 30px;
+=======
+.card .share {
+    margin-top: 0em;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+
+}
+
+.card a {
+    color: white;
+    transition: .4s ease-in-out;
+}
+
+.card a:hover {
+    color: rgb(144, 204, 230);
+}
+
+.card button {
+    padding: 0.8em 1.7em;
+    display: block;
+    margin: auto;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    transition: .4s ease-in-out;
+}
+
+.card button:hover {
+    background: rgb(88, 0, 0);
+    color: white;
+    cursor: pointer;
+}
+
+.m-a {
+    color: aliceblue;
+    font-size: 25px;
+    font-weight: 100px;
+
+>>>>>>> wednesday11
 }

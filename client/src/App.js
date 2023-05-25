@@ -12,9 +12,57 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+<<<<<<< HEAD
+=======
+
+  console.log("CURRENT USER APP", currentUser);
+
+
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const accessToken = await getAccessTokenSilently();
+  //     await fetchCurrentUser(accessToken);
+  //     // console.log('ACCESS TOKEN', accessToken);
+  //   } catch (error) {
+  //     console.error('Error retrieving user information:', error);
+  //   }
+  // };
+
+  // const fetchCurrentUser = async () => {
+  //   try {
+  //     if (isAuthenticated) {
+  //       const accessToken = await getAccessTokenSilently();
+  //       const response = await fetch('/current_user', {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       });
+
+  //       if (response.ok) {
+  //         const userData = await response.json();
+  //         setCurrentUser(userData);
+  //         // console.log('USER DATA:', userData);
+  //       } else {
+  //         console.error('Error:', response.statusText);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     fetchUserInfo();
+  //   }
+  // }, [getAccessTokenSilently, isAuthenticated]);
+
+
+>>>>>>> wednesday11
 
   console.log("CURRENT USER", currentUser);
 
+<<<<<<< HEAD
 
   const fetchUserInfo = async () => {
     try {
@@ -63,6 +111,14 @@ function App() {
         if (!resp.ok) {
           throw new Error('Error retrieving posts');
         }
+=======
+  useEffect(() => {
+    fetch('/posts')
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error('Error retrieving posts');
+        }
+>>>>>>> wednesday11
         return resp.json();
       })
       .then(data => {

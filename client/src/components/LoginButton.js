@@ -17,15 +17,22 @@ const LoginButton = ({ setCurrentUser }) => {
 
             if (response.ok) {
                 const userInfo = await response.json();
+<<<<<<< HEAD
                 console.log(userInfo);
+=======
+                console.log('AUTH USER', userInfo);
+>>>>>>> wednesday11
 
                 const userData = {
                     username: userInfo.nickname,
                     email: userInfo.email,
                     sub: userInfo.sub,
 
+<<<<<<< HEAD
                 };
 
+=======
+>>>>>>> wednesday11
                 fetch("/auth/callback", {
                     method: "POST",
                     headers: {
@@ -36,13 +43,32 @@ const LoginButton = ({ setCurrentUser }) => {
                     .then((response) => response.json())
                     .then((data) => {
                         console.log("User Status:", data);
+<<<<<<< HEAD
                         setCurrentUser(userData); // Set currentUser to the fetched userData in the parent component
+=======
+                        // Fetch current user after callback and update current user state
+                        fetchCurrentUser();
+>>>>>>> wednesday11
                     })
                     .catch((error) => {
                         console.error("Error adding user to the database:", error);
                     });
             } else {
                 throw new Error("Failed to fetch user information");
+            }
+        };
+
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await fetch("/current_user");
+                if (response.ok) {
+                    const currentUser = await response.json();
+                    setCurrentUser(currentUser); // Update current user state
+                } else {
+                    throw new Error("Failed to fetch current user");
+                }
+            } catch (error) {
+                console.error("Error retrieving current user:", error);
             }
         };
 
@@ -57,6 +83,14 @@ const LoginButton = ({ setCurrentUser }) => {
 
         fetchUserInfo();
     }, [getAccessTokenSilently, setCurrentUser]);
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> wednesday11
 
     return (
         <button className="ui-btn" onClick={loginWithRedirect}>

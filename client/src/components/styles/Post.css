@@ -82,9 +82,15 @@
     font-size: 16px;
     border: 1px solid #cccccc2f;
     border-radius: 5px;
+<<<<<<< HEAD
     background-color: #20303c;
     height: 200px;
     min-height: 200px;
+=======
+    background-color: #334756;
+    height: 200px;
+    min-height: 340px;
+>>>>>>> wednesday11
     width: 879px;
     max-width: 879px;
     color: aliceblue;

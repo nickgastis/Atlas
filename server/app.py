@@ -160,7 +160,12 @@ def get_all_posts():
             'conversation': post.conversation,
             'user_id': post.user_id,
             'upvotes': post.upvotes,
+<<<<<<< HEAD
             'downvotes': post.downvotes
+=======
+            'downvotes': post.downvotes,
+            'username': post.username,
+>>>>>>> wednesday11
         }
         serialized_posts.append(serialized_post)
     
@@ -199,39 +204,42 @@ class UsersById(Resource):
         return {'message': 'User created successfully'}, 201
 
 
-class QueryResource(Resource):
-    def get(self, query_id):
-        query = Query.query.get(query_id)
-        if query:
-            return {
-                'id': query.id,
-                'title': query.title,
-                'conversation': query.conversation,
-                'user_id': query.user_id
-            }
-        else:
-            return {'message': 'Query not found'}, 404
+# class QueryResource(Resource):
+#     def get(self, query_id):
+#         query = Query.query.get(query_id)
+#         if query:
+#             return {
+#                 'id': query.id,
+#                 'title': query.title,
+#                 'conversation': query.conversation,
+#                 'user_id': query.user_id
+#             }
+#         else:
+#             return {'message': 'Query not found'}, 404
 
 
-    def post(self):
-        data = request.get_json()
-        title = data.get('title')
-        conversation = data.get('conversation')
-        user_id = data.get('user_id')
+<<<<<<< HEAD
+=======
+#     def post(self):
+#         data = request.get_json()
+#         title = data.get('title')
+#         conversation = data.get('conversation')
+#         user_id = data.get('user_id')
 
-        query = Query(title=title, conversation=conversation, user_id=user_id)
-        db.session.add(query)
-        db.session.commit()
+#         query = Query(title=title, conversation=conversation, user_id=user_id)
+#         db.session.add(query)
+#         db.session.commit()
 
-        return {'message': 'Query created successfully'}, 201
+#         return {'message': 'Query created successfully'}, 201
 
 
 
 api.add_resource(UsersById, '/users', '/users/<int:user_id>')
-api.add_resource(QueryResource, '/queries', '/queries/<int:query_id>')
+# api.add_resource(QueryResource, '/queries', '/queries/<int:query_id>')
 
 
 
+>>>>>>> wednesday11
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -5,11 +5,29 @@ import CreatePost from './CreatePost';
 
 
 
-function Chats({ currentUser }) {
+function Chats({ currentUser }{ currentUser }) {
     const [chatMessages, setChatMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [conversation, setConversation] = useState('');
+
+    useEffect(() => {
+        if (currentUser && currentUser.user_id) {
+            const storedChatMessages = JSON.parse(localStorage.getItem(`chatMessages_${currentUser.user_id}`));
+            setChatMessages(storedChatMessages || []);
+        }
+    }, [currentUser]);
+
+    useEffect(() => {
+        if (currentUser && currentUser.user_id) {
+            localStorage.setItem(`chatMessages_${currentUser.user_id}`, JSON.stringify(chatMessages));
+        }
+    }, [chatMessages, currentUser]);
+
+    console.log("CHATS CURRENT USER", currentUser);
+
+
+
 
     const apiKey = process.env.REACT_APP_API_KEY;
     // console.log(currentUser)
@@ -25,6 +43,10 @@ function Chats({ currentUser }) {
             const isGratitude = gratitudeKeywords.some(keyword =>
                 prompt.toLowerCase().includes(keyword)
             );
+
+
+
+
 
             const payload = {
                 model: 'gpt-3.5-turbo',
@@ -110,6 +132,9 @@ function Chats({ currentUser }) {
         setConversation(conversationText);
     };
 
+    const clearConversation = () => {
+        setChatMessages([]);
+    };
 
 
 
@@ -147,6 +172,7 @@ function Chats({ currentUser }) {
                             </div>
                         </div>
                     ))}
+                    <button className='clear-btn' onClick={clearConversation}>Clear Conversation</button>
                 </div>
             </div>
             <div className="search-cont">
