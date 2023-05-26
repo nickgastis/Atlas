@@ -62,7 +62,7 @@
 
 .post-votes {
     font-size: 20px;
-    font-weight: lighter;
+    font-weight: light;
     text-align: center;
 }
 
@@ -143,17 +143,31 @@
 .post-action-btn-up {
     padding: 5px 10px;
     margin-right: 10px;
-    background-color: #0079d3;
+    background-color: #0078d300;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    scale: 2;
 }
 
 .post-action-btn-up:hover {
     transition: 0.3s ease-in-out;
-    background-color: #26273183;
+    scale: 2.6;
+    background-color: #26273100;
+}
+
+.btn-active {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #0078d394;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    scale: 2;
 }
 
 .post-action-btn-up:last-child {

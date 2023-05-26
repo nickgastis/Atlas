@@ -3,7 +3,7 @@ import './styles/Home.css';
 import Post from './Post';
 import SearchBar from './SearchBar';
 
-function Home({ posts }) {
+function Home({ posts, setPosts }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredPosts, setFilteredPosts] = useState([]);
 
@@ -31,13 +31,13 @@ function Home({ posts }) {
     //COMMENT
     return (
         <div className="home">
-            <h1 className="welcome-title">Welcome to Atlas!</h1>
+            <h1 className="welcome-title">Atlas</h1>
             <div className="search-bar">
                 <SearchBar value={searchQuery} onChange={handleSearchQueryChange} />
             </div>
             <div className="post-list">
                 {filteredPosts.map((post) => (
-                    <Post key={post.id} post={post} />
+                    <Post key={post.id} post={post} setPosts={setPosts} />
                 ))}
             </div>
         </div>

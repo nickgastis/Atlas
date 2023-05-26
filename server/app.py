@@ -167,12 +167,31 @@ def get_all_posts():
     
     return jsonify(serialized_posts)
 
-# from flask_restful import Resource
 
+@app.route('/posts/<int:post_id>', methods=['PATCH'])
+def update_post_votes(post_id):
+    post = Post.query.get_or_404(post_id)  
 
+    action = request.json.get('action')  
+    if action == 'upvote':
+        post.upvotes += 1  
+    elif action == 'downvote':
+        post.downvotes += 1  
+    else:
+        return jsonify({'error': 'Invalid action'}), 400  
 
+    db.session.commit()  
 
-
+    serialized_post = {
+        'id': post.id,
+        'title': post.title,
+        'conversation': post.conversation,
+        'user_id': post.user_id,
+        'upvotes': post.upvotes,
+        'downvotes': post.downvotes,
+        'username': post.username,
+    }
+    return jsonify(serialized_post)
 
 
 

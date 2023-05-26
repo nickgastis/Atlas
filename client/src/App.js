@@ -87,7 +87,7 @@ function App() {
     <div className="App">
       <SideBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Routes>
-        <Route path="/" element={<Home posts={posts} />} />
+        <Route path="/" element={<Home posts={posts} setPosts={setPosts} />} />
         <Route path="/chats" element={<Chats currentUser={currentUser} />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile currentUser={currentUser} />} />
