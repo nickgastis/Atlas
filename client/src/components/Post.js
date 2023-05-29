@@ -18,18 +18,18 @@ function Post({ post, setPost }) {
         }
     };
 
-    const handleDownvote = async () => {
-        setIsLoading(true);
-        const data = { action: 'downvote' };
-        try {
-            await axios.patch(`/posts/${post.id}`, data);
-            await fetchPostData();
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    // const handleDownvote = async () => {
+    //     setIsLoading(true);
+    //     const data = { action: 'downvote' };
+    //     try {
+    //         await axios.patch(`/posts/${post.id}`, data);
+    //         await fetchPostData();
+    //     } catch (error) {
+    //         console.error(error);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
 
     const fetchPostData = async () => {
         try {

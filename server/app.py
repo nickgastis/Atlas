@@ -143,7 +143,22 @@ def create_post():
     return jsonify(message='Post created successfully'), 201
 
 
+#GETS LATEST POST
+@app.route('/api/posts/latest', methods=['GET'])
+def get_latest_post():
+    latest_post = Post.query.order_by(Post.id.desc()).first()
 
+    if latest_post:
+        post_data = {
+            'id': latest_post.id,
+            'title': latest_post.title,
+            'conversation': latest_post.conversation,
+            'user_id': latest_post.user_id,
+            'username': latest_post.username
+        }
+        return jsonify(post=post_data), 200
+    else:
+        return jsonify(message='No posts found'), 404
 
 
 from flask import jsonify

@@ -16,6 +16,61 @@ function App() {
   console.log("CURRENT USER APP", currentUser);
 
 
+
+
+  // gets all posts
+  useEffect(() => {
+    fetch('/posts')
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error('Error retrieving posts');
+        }
+        return resp.json();
+      })
+      .then(data => {
+        setPosts(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
+
+  console.log('POST DATA', posts);
+
+  // console.log("CYRRENT USER", currentUser);
+
+
+
+
+
+
+  return (
+    <div className="App">
+      <SideBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <Routes>
+        <Route path="/" element={<Home posts={posts} setPosts={setPosts} />} />
+        <Route path="/chats" element={<Chats currentUser={currentUser} setPosts={setPosts} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile currentUser={currentUser} posts={posts} />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
   // const fetchUserInfo = async () => {
   //   try {
   //     const accessToken = await getAccessTokenSilently();
@@ -56,44 +111,3 @@ function App() {
   // }, [getAccessTokenSilently, isAuthenticated]);
 
 
-
-
-  useEffect(() => {
-    fetch('/posts')
-      .then(resp => {
-        if (!resp.ok) {
-          throw new Error('Error retrieving posts');
-        }
-        return resp.json();
-      })
-      .then(data => {
-        setPosts(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }, []);
-
-  // console.log('POST DATA', posts);
-
-  // console.log("CYRRENT USER", currentUser);
-
-
-
-
-
-
-  return (
-    <div className="App">
-      <SideBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
-      <Routes>
-        <Route path="/" element={<Home posts={posts} setPosts={setPosts} />} />
-        <Route path="/chats" element={<Chats currentUser={currentUser} />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile currentUser={currentUser} />} />
-      </Routes>
-    </div>
-  );
-}
-
-export default App;

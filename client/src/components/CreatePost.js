@@ -3,7 +3,7 @@ import axios from 'axios';
 import './styles/CreatePost.css';
 
 
-const CreatePost = ({ conversation, currentUser }) => {
+const CreatePost = ({ conversation, currentUser, setPosts }) => {
     const [title, setTitle] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -26,6 +26,16 @@ const CreatePost = ({ conversation, currentUser }) => {
             .then((response) => {
                 console.log(response.data);
                 setIsSubmitted(true); // Set the submitted state to true
+                // Retrieve the latest post after creating it
+                axios
+                    .get('/api/posts/latest')
+                    .then((latestPostResponse) => {
+                        console.log(latestPostResponse.data);
+                        setPosts((prevPosts) => [...prevPosts, latestPostResponse.data.post]); // Update the posts state with the latest post
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
             })
             .catch((error) => {
                 console.error(error);

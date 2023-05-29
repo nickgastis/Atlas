@@ -5,6 +5,8 @@ import "./styles/LoginButton.css";
 const LoginButton = ({ setCurrentUser }) => {
     const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
 
+
+    // gets user info from auth
     useEffect(() => {
         const getUserInfo = async (accessToken) => {
             const url = "https://dev-fxjbmegke1ksv11l.us.auth0.com/userinfo";
@@ -25,6 +27,8 @@ const LoginButton = ({ setCurrentUser }) => {
                     sub: userInfo.sub,
                 };
 
+
+                //posts user to my database
                 fetch("/auth/callback", {
                     method: "POST",
                     headers: {
@@ -46,6 +50,7 @@ const LoginButton = ({ setCurrentUser }) => {
             }
         };
 
+        // grabs current user
         const fetchCurrentUser = async () => {
             try {
                 const response = await fetch("/current_user");
