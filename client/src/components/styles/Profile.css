@@ -1,7 +1,13 @@
+.profile-container {
+    height: 100vh;
+}
+
 .card {
     width: 23em;
     height: 25.5em;
-    background: #132026;
+    background: #1b2c35;
+    /* background: linear-gradient(to top right, #16181a, #140f17, #22334b); */
+
     transition: 1s ease-in-out;
     clip-path: polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px);
     border-top-right-radius: 20px;
@@ -10,6 +16,8 @@
     flex-direction: column;
     margin-left: 45%;
     margin-top: 10%;
+    font-family: 'Comfortaa', cursive;
+    box-shadow: 20px #132026;
 }
 
 .card span {

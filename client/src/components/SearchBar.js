@@ -10,7 +10,7 @@ function SearchBar({ value, onChange }) {
                     value={value}
                     onChange={onChange}
                 />
-                <label className="label" htmlFor="input">Search...</label>
+                <label className="label" htmlFor="input">Search Solutions...</label>
                 <div className="underline"></div>
                 <div className="sideline"></div>
                 <div className="upperline"></div>

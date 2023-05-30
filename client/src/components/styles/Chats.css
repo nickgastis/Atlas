@@ -1,3 +1,7 @@
+.whole-chat-container {
+    height: 100vh;
+}
+
 .chat-container {
     display: flex;
     justify-content: center;
@@ -6,13 +10,13 @@
 }
 
 .chat-messages {
-    background-color: #082032;
+    background-color: #08203200;
     padding: 20px;
     height: 530px;
     overflow-y: scroll;
     width: 1000px;
     margin-left: 11%;
-    border-radius: 10px;
+    border-radius: 7px;
     margin-top: 40px;
     scrollbar-width: thin;
     scrollbar-color: #949494 #1e2327;
@@ -29,16 +33,16 @@
 .message-box {
     display: inline-block;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .user-message-box {
-    background-color: #20303c;
+    background-color: #20303cef;
 
 }
 
 .atlas-message-box {
-    background-color: #334756;
+    background-color: #334756e6;
 
 }
 
@@ -58,6 +62,7 @@
 
 .atlas-message {
     color: #b3d2e9;
+
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -66,10 +71,12 @@
 
 .chat-messages::-webkit-scrollbar-thumb {
     background-color: #949494;
+    border-radius: 8px;
 }
 
 .chat-messages::-webkit-scrollbar-track {
     background-color: #1e2327;
+    border-radius: 8px;
 }
 
 .search-cont {
@@ -172,4 +179,8 @@
 
 .clear-btn:hover {
     background-color: #425f68;
+}
+
+.close-create-post {
+    margin-left: 30%;
 }

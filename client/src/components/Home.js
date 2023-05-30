@@ -31,7 +31,8 @@ function Home({ posts, setPosts }) {
     //COMMENT
     return (
         <div className="home">
-            <h1 className="welcome-title">Atlas</h1>
+            <h1 className="font-link">Atlas</h1>
+            <h2 className="sub-home">Unlock the Power of AI: Collaborate, Share, and Learn with Like-Minded Innovators</h2>
             <div className="search-bar">
                 <SearchBar value={searchQuery} onChange={handleSearchQueryChange} />
             </div>

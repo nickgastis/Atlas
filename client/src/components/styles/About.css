@@ -17,7 +17,7 @@
     font-size: 20px;
     display: flex;
     flex-shrink: 1;
-    /* Added flex-shrink property */
+    font-family: 'Comfortaa', cursive;
 }
 
 .about-title {

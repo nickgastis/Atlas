@@ -35,7 +35,9 @@ function Post({ post, setPost }) {
         try {
             const response = await axios.get(`/posts/${post.id}`);
             const updatedPost = response.data;
-            setPost(updatedPost);
+            setPost((prevPost) => {
+                return { ...prevPost, upvotes: updatedPost.upvotes }; // Update only the upvotes property of the post
+            });
         } catch (error) {
             console.error(error);
         }

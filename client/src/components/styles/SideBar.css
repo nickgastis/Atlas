@@ -24,7 +24,7 @@
     color: #cdd7e3;
     font-weight: light;
     margin-right: 10px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Comfortaa', cursive;
     letter-spacing: 1.5px;
 }
 
@@ -34,7 +34,7 @@
     height: 70px;
     width: 70px;
     margin-left: -20px;
-    margin-bottom: -15px;
+    margin-bottom: -10px;
     transition: .4s ease-in-out;
 }
 
@@ -58,6 +58,8 @@
     text-decoration: none;
     padding: 8px;
     margin-bottom: 10px;
+    /* font-family: 'Comfortaa', cursive; */
+    /* font-weight: 600; */
 }
 
 

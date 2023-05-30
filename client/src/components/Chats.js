@@ -11,6 +11,7 @@ function Chats({ currentUser, setPosts }) {
     const [isLoading, setIsLoading] = useState(false);
 
 
+
     //saves user conversations: specific to current user
     useEffect(() => {
         if (currentUser && currentUser.user_id) {
@@ -139,8 +140,14 @@ function Chats({ currentUser, setPosts }) {
         setChatMessages([]);
     };
 
+
+
+    const closeCreatePost = () => {
+        setShowCreatePost(false);
+    };
+
     return (
-        <div>
+        <div className='whole-chat-container'>
             <div className="chat-container">
                 <div className="chat-messages" ref={chatMessagesRef}>
                     {chatMessages.map((message, index) => (
@@ -209,12 +216,23 @@ function Chats({ currentUser, setPosts }) {
                             placeholder="Type your message..."
                         />
                         <button onClick={sendMessageToChatbot}>Send</button>
-                        {showCreatePost && <CreatePost currentUser={currentUser} conversation={conversation} setPosts={setPosts} />}
+                        {showCreatePost && (
+                            <div className="create-post-container">
+                                <CreatePost
+                                    currentUser={currentUser}
+                                    conversation={conversation}
+                                    setPosts={setPosts}
+                                />
+                                <button className="close-create-post" onClick={closeCreatePost}>
+                                    Close
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Chats;
