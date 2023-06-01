@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './styles/Post.css';
 
@@ -6,6 +6,8 @@ function Post({ post, setPost, currentUser }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isUpvoted, setIsUpvoted] = useState(false);
     const [upvotes, setUpvotes] = useState(post.upvotes);
+    const [isExpanded, setIsExpanded] = useState(false)
+    const contentRef = useRef(null);
 
     useEffect(() => {
         if (currentUser && currentUser.user_id) {
@@ -42,6 +44,25 @@ function Post({ post, setPost, currentUser }) {
         }
     };
 
+
+
+    const handleReadMore = () => {
+        setIsExpanded(!isExpanded);
+        adjustTextareaHeight();
+    };
+    const adjustTextareaHeight = () => {
+        if (contentRef.current) {
+            if (isExpanded) {
+                // Revert back to the original height
+                contentRef.current.style.height = `auto`;
+            } else {
+                // Expands hieight to fit content
+                contentRef.current.style.height = 'auto';
+                contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
+            }
+        }
+    };
+
     return (
         <div className="post-container">
             <div className="post">
@@ -50,8 +71,12 @@ function Post({ post, setPost, currentUser }) {
                     <h2 className="post-title">{post.title}</h2>
                 </div>
                 <div className="post-content">
-                    <textarea className="post-question" readOnly value={post.conversation}></textarea>
-                </div>
+                    <textarea
+                        className={`post-question ${isExpanded ? 'expanded' : ''}`}
+                        readOnly
+                        value={post.conversation}
+                        ref={contentRef}
+                    ></textarea>                </div>
                 <div className="post-actions">
                     <button
                         className={`upvote-btn ${isUpvoted ? 'active' : ''}`}
@@ -83,7 +108,15 @@ function Post({ post, setPost, currentUser }) {
 
                     <h2 className="post-votes">{upvotes}</h2>
                 </div>
-                <button className="read-more">Read More</button>
+                {!isExpanded ? (
+                    <button className="read-more" onClick={handleReadMore}>
+                        Read More
+                    </button>
+                ) : (
+                    <button className="read-more" onClick={handleReadMore}>
+                        Read Less
+                    </button>
+                )}
             </div>
         </div>
     );

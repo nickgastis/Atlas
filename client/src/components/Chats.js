@@ -222,10 +222,12 @@ function Chats({ currentUser, setPosts }) {
                                     currentUser={currentUser}
                                     conversation={conversation}
                                     setPosts={setPosts}
+                                    closeCreatePost={closeCreatePost}
                                 />
-                                <button className="close-create-post" onClick={closeCreatePost}>
-                                    Close
-                                </button>
+                                <div>
+
+
+                                </div>
                             </div>
                         )}
                     </div>

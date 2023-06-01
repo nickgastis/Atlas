@@ -49,7 +49,7 @@ function SideBar({ currentUser, setCurrentUser }) {
                 Home
             </NavLink>
             <NavLink to="/chats" activeClassName="active">
-                Chat
+                Atlas
             </NavLink>
             <NavLink to="/about" activeClassName="active">
                 About

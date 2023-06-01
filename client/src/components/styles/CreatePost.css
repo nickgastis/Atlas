@@ -78,3 +78,7 @@
 .success-message {
     margin-top: 20px;
 }
+
+.close-create-post {
+    align-items: right;
+}

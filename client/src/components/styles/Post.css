@@ -91,6 +91,29 @@
     line-height: 2;
     scrollbar-width: thin;
     scrollbar-color: #949494 #1e2327;
+    /* transition: height 1.3s ease; */
+}
+
+.post-question.expanded {
+    background-color: #334756;
+
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc2f;
+    border-radius: 5px;
+    background-color: #334756;
+    height: 200px;
+    min-height: 340px;
+    width: 879px;
+    max-width: 879px;
+    color: aliceblue;
+    line-height: 2;
+    scrollbar-width: thin;
+    scrollbar-color: #949494 #1e2327;
+    /* transition: height 1.3s ease; */
 }
 
 .post-question::-webkit-scrollbar {
@@ -114,6 +137,7 @@
 .post-question::-webkit-scrollbar-thumb:hover {
     background-color: #555555;
 }
+
 
 .post-response {
     background-color: #334756;

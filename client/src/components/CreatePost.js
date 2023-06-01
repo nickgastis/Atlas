@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './styles/CreatePost.css';
 
-
-const CreatePost = ({ conversation, currentUser, setPosts }) => {
+const CreatePost = ({ conversation, currentUser, setPosts, closeCreatePost }) => {
     const [title, setTitle] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -24,14 +24,11 @@ const CreatePost = ({ conversation, currentUser, setPosts }) => {
         axios
             .post('/api/posts', newPost)
             .then((response) => {
-                // console.log(response.data);
-                setIsSubmitted(true); // Set the submitted state to true
-                // Retrieve the latest post after creating it
+                setIsSubmitted(true);
                 axios
                     .get('/api/posts/latest')
                     .then((latestPostResponse) => {
-                        // console.log(latestPostResponse.data);
-                        setPosts((prevPosts) => [...prevPosts, latestPostResponse.data.post]); // Update the posts state with the latest post
+                        setPosts((prevPosts) => [...prevPosts, latestPostResponse.data.post]);
                     })
                     .catch((error) => {
                         console.error(error);
@@ -42,8 +39,15 @@ const CreatePost = ({ conversation, currentUser, setPosts }) => {
             });
     };
 
-    if (isSubmitted) {
-        return <h1 className="success-message">Post successful!</h1>;
+    useEffect(() => {
+        if (isSubmitted) {
+            window.alert('Post successful!');
+            closeCreatePost(); // Trigger the closeCreatePost function
+        }
+    }, [isSubmitted]);
+
+    if (!isVisible) {
+        return null;
     }
 
     return (
@@ -67,11 +71,12 @@ const CreatePost = ({ conversation, currentUser, setPosts }) => {
                     <textarea value={conversation} readOnly className="textarea" />
                 </div>
                 <button type="submit">Submit</button>
+                <button className="close-create-post" onClick={closeCreatePost}>
+                    X
+                </button>
             </form>
         </div>
     );
 };
 
 export default CreatePost;
-
-
