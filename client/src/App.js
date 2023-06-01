@@ -13,7 +13,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
-  console.log("CURRENT USER APP", currentUser);
+  // console.log("CURRENT USER APP", currentUser);
 
 
 
@@ -35,7 +35,7 @@ function App() {
       });
   }, []);
 
-  console.log('POST DATA', posts);
+  // console.log('POST DATA', posts);
 
   // console.log("CYRRENT USER", currentUser);
 
@@ -48,7 +48,7 @@ function App() {
     <div className="App">
       <SideBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Routes>
-        <Route path="/" element={<Home posts={posts} setPosts={setPosts} />} />
+        <Route path="/" element={<Home posts={posts} setPosts={setPosts} currentUser={currentUser} />} />
         <Route path="/chats" element={<Chats currentUser={currentUser} setPosts={setPosts} />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile currentUser={currentUser} posts={posts} />} />

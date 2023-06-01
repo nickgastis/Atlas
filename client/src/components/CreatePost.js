@@ -24,13 +24,13 @@ const CreatePost = ({ conversation, currentUser, setPosts }) => {
         axios
             .post('/api/posts', newPost)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 setIsSubmitted(true); // Set the submitted state to true
                 // Retrieve the latest post after creating it
                 axios
                     .get('/api/posts/latest')
                     .then((latestPostResponse) => {
-                        console.log(latestPostResponse.data);
+                        // console.log(latestPostResponse.data);
                         setPosts((prevPosts) => [...prevPosts, latestPostResponse.data.post]); // Update the posts state with the latest post
                     })
                     .catch((error) => {

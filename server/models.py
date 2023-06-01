@@ -33,9 +33,8 @@ class User(db.Model, SerializerMixin):
 
     @property
     def is_anonymous(self):
-        return False
-    
-    
+        return False    
+
 
 class Query(db.Model):
     id = db.Column(db.Integer, primary_key=True)

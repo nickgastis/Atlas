@@ -81,6 +81,7 @@ def auth_callback():
 
 from flask_login import current_user, login_required
 
+#GET CURRENT USER
 @app.route('/current_user', methods=['GET'])
 @login_required
 def get_current_user():
@@ -103,7 +104,7 @@ def get_current_user():
 
 
 
-
+#DELETE USER
 @app.route('/current_user', methods=['DELETE'])
 @login_required
 def delete_current_user():
@@ -125,7 +126,7 @@ def delete_current_user():
 
 
 
-
+#CREAT POST
 @app.route('/api/posts', methods=['POST'])
 def create_post():
     data = request.get_json()
@@ -163,6 +164,7 @@ def get_latest_post():
 
 from flask import jsonify
 
+#GETS ALL POSTS
 @app.route('/posts', methods=['GET'])
 def get_all_posts():
     posts = Post.query.order_by(Post.upvotes.desc()).all()
@@ -183,6 +185,7 @@ def get_all_posts():
     return jsonify(serialized_posts)
 
 
+#UPVOTE PATCH
 @app.route('/posts/<int:post_id>', methods=['PATCH'])
 def update_post_votes(post_id):
     post = Post.query.get_or_404(post_id)  
@@ -207,6 +210,23 @@ def update_post_votes(post_id):
         'username': post.username,
     }
     return jsonify(serialized_post)
+
+
+@app.route('/posts/<int:post_id>', methods=['GET'])
+def get_post(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    serialized_post = {
+        'id': post.id,
+        'title': post.title,
+        'conversation': post.conversation,
+        'user_id': post.user_id,
+        'upvotes': post.upvotes,
+        'downvotes': post.downvotes,
+        'username': post.username,
+    }
+    return jsonify(serialized_post)
+
 
 
 

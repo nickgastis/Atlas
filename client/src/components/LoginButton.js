@@ -19,7 +19,7 @@ const LoginButton = ({ setCurrentUser }) => {
 
             if (response.ok) {
                 const userInfo = await response.json();
-                console.log('AUTH USER', userInfo);
+                // console.log('AUTH USER', userInfo);
 
                 const userData = {
                     username: userInfo.nickname,
@@ -38,7 +38,7 @@ const LoginButton = ({ setCurrentUser }) => {
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log("User Status:", data);
+                        // console.log("User Status:", data);
                         // Fetch current user after callback and update current user state
                         fetchCurrentUser();
                     })

@@ -3,11 +3,11 @@ import './styles/Home.css';
 import Post from './Post';
 import SearchBar from './SearchBar';
 
-function Home({ posts, setPosts }) {
+function Home({ posts, setPosts, currentUser }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredPosts, setFilteredPosts] = useState([]);
 
-    console.log("HOME POSTS", posts);
+    // console.log("HOME POSTS", posts);
 
     useEffect(() => {
         setFilteredPosts(posts);
@@ -38,7 +38,7 @@ function Home({ posts, setPosts }) {
             </div>
             <div className="post-list">
                 {filteredPosts.map((post) => (
-                    <Post key={post.id} post={post} setPosts={setPosts} />
+                    <Post key={post.id} post={post} setPosts={setPosts} currentUser={currentUser} />
                 ))}
             </div>
         </div>
