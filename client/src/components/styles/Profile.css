@@ -14,8 +14,8 @@
     border-bottom-left-radius: 20px;
     display: flex;
     flex-direction: column;
-    margin-left: 45%;
-    margin-top: 10%;
+    margin-left: 46.5%;
+    margin-top: 3%;
     font-family: 'Comfortaa', cursive;
     box-shadow: 20px #132026;
 }
@@ -26,7 +26,7 @@
     text-align: center;
     display: block;
     font-size: 30px;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-bottom: 20px;
 }
 
@@ -43,7 +43,7 @@
 
 
 .card .share {
-    margin-top: 0em;
+    margin-top: 1em;
     display: flex;
     justify-content: center;
     gap: 1em;
@@ -63,6 +63,7 @@
     padding: 0.8em 1.7em;
     display: block;
     margin: auto;
+    margin-top: 30px;
     border-radius: 25px;
     border: none;
     font-weight: bold;
@@ -82,4 +83,21 @@
     font-size: 25px;
     font-weight: 100px;
 
+}
+
+
+.post-list-p {
+    margin-top: 40px;
+}
+
+
+.font-link-p {
+    font-family: 'Comfortaa', cursive;
+    color: aliceblue;
+    font-size: 40px;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    margin-left: 12%;
+    letter-spacing: 1.5px;
+    text-align: center;
 }

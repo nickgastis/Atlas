@@ -51,7 +51,7 @@ function App() {
         <Route path="/" element={<Home posts={posts} setPosts={setPosts} currentUser={currentUser} />} />
         <Route path="/chats" element={<Chats currentUser={currentUser} setPosts={setPosts} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile currentUser={currentUser} posts={posts} />} />
+        <Route path="/profile" element={<Profile currentUser={currentUser} posts={posts} setPosts={setPosts} />} />
       </Routes>
     </div>
   );
